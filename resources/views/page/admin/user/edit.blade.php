@@ -35,6 +35,18 @@
                                required>
                     </div>
 
+                    {{-- PASSWORD --}}
+                    <div class="form-group mb-3">
+                        <label>Password</label>
+                        <input type="password"
+                               name="password"
+                               class="form-control"
+                               @if(!isset($user))
+                                   required
+                               @endif
+                               placeholder="{{ isset($user) ? 'Kosongkan jika tidak ingin ganti password' : '' }}">
+                    </div>
+
                     <button type="submit" class="btn btn-primary">
                         {{ isset($user) ? 'Update' : 'Simpan' }}
                     </button>

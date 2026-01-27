@@ -14,3 +14,13 @@
 <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 <!-- End layout styles -->
 <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
+
+<style>
+    .obat-img {
+        width: 100%;
+        height: 180px;          /* TINGGI FIX */
+        object-fit: contain;    /* foto tidak kepotong */
+        background-color: #f8f9fa;
+        padding: 10px;
+    }
+</style>

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Transaksi;
 
 class Obat extends Model
 {
@@ -17,6 +18,7 @@ class Obat extends Model
         'harga_obat',
         'stok_obat',
         'tanggal_exp',
+        'foto',
     ];
 
     public function transaksi()
