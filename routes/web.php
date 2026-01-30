@@ -14,45 +14,38 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-    // LOGIN
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
     Route::post('/login', [LoginController::class, 'login']);
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-    // GOOGLE LOGIN
     Route::get('/auth/google', [LoginController::class, 'redirectToGoogle'])->name('google.login');
 
     Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
-    // FORM REGISTER
     Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegisterForm'])->name('register');
 
-    // PROSES REGISTER
     Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register.post');
 
-    // FORM LUPA PASSWORD
     Route::get('/password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])
         ->name('password.request');
 
-    // KIRIM EMAIL RESET PASSWORD
     Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])
         ->name('password.email');
 
-    // FORM RESET PASSWORD (dari link email)
     Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])
         ->name('password.reset');
 
-    // PROSES RESET PASSWORD
     Route::post('/password/reset', [ResetPasswordController::class, 'reset'])
         ->name('password.update');
 
-    // AUTH AREA
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
     Route::middleware(['auth'])->group(function () {
 
         Route::middleware(['role:admin,pegawai'])->group(function () {
             Route::resource('obat', ObatController::class);
         });
 
-    // ADMIN
     Route::middleware(['role:admin'])->group(function () {
         Route::get('/admin', [DashboardController::class, 'index'])
             ->name('admin.dashboard');
@@ -61,7 +54,6 @@ Route::get('/', function () {
         Route::resource('pegawai', PegawaiController::class);
     });
 
-    // PEGAWAI
     Route::middleware(['role:pegawai'])->group(function () {
         Route::get('/pegawai', [DashboardController::class, 'index'])
             ->name('pegawai.dashboard');
@@ -76,7 +68,6 @@ Route::get('/', function () {
             ->name('transaksi.verifikasi.update');
     });
 
-    // PELANGGAN
     Route::middleware(['role:pelanggan'])
         ->prefix('pelanggan')
         ->name('pelanggan.')

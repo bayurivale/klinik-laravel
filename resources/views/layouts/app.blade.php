@@ -46,9 +46,12 @@
                   <p class="mb-1 text-black">{{ auth()->user()->username }}</p>
                 </div>
               </a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
+                @csrf
+              </form>
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="#" id="btn-logout">
                   <i class="mdi mdi-logout me-2 text-primary"></i> Signout </a>
               </div>
             </li>
@@ -80,8 +83,27 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    <script>
+    document.getElementById('btn-logout').addEventListener('click', function (e) {
+      e.preventDefault();
+
+      Swal.fire({
+        title: 'Yakin mau logout?',
+        text: 'Kamu akan keluar dari sistem',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Logout',
+        cancelButtonText: 'Batal'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          document.getElementById('logout-form').submit();
+        }
+      });
+    });
+    </script>
     @include('components.script')
     @stack('script')
   </body>

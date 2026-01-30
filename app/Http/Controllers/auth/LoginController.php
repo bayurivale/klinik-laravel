@@ -21,18 +21,15 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        // 1. Validasi input
         $request->validate([
             'login' => 'required',
             'password' => 'required',
         ]);
 
-        // 2. Tentukan apakah login pakai email atau username
         $loginType = filter_var($request->login, FILTER_VALIDATE_EMAIL) 
             ? 'email'
             : 'username';
 
-        // 3. Coba login
         if (Auth::attempt([
             $loginType => $request->login,
             'password' => $request->password
@@ -40,7 +37,6 @@ class LoginController extends Controller
 
             $request->session()->regenerate();
 
-            // redirect sesuai role
             $role = auth()->user()->role;
             if ($role === 'admin') return redirect()->route('admin.dashboard');
             if ($role === 'pegawai') return redirect()->route('pegawai.dashboard');
@@ -52,9 +48,6 @@ class LoginController extends Controller
         ]);
     }
 
-    // ===============================
-    // LOGIN GOOGLE
-    // ===============================
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
@@ -78,9 +71,6 @@ class LoginController extends Controller
         return redirect('/dashboard');
     }
 
-    // ===============================
-    // REDIRECT BERDASARKAN ROLE
-    // ===============================
     private function redirectByRole($user)
     {
         if ($user->role === 'admin') {
@@ -94,9 +84,6 @@ class LoginController extends Controller
         return redirect()->route('pelanggan.dashboard');
     }
 
-    // ===============================
-    // LOGOUT
-    // ===============================
     public function logout(Request $request)
     {
         Auth::logout();

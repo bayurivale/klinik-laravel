@@ -44,26 +44,75 @@
 
               <!-- FORM REGISTER MANUAL -->
               <form method="POST" action="{{ route('register.post') }}">
-                @csrf
-                <div class="form-group">
-                  <input type="text" name="username" class="form-control form-control-lg" placeholder="Username" value="{{ old('username') }}" required>
-                </div>
-                <div class="form-group">
-                  <input type="email" name="email" class="form-control form-control-lg" placeholder="Email" value="{{ old('email') }}" required>
-                </div>
-                <div class="form-group">
-                  <input type="password" name="password" class="form-control form-control-lg" placeholder="Password" required>
-                </div>
-                <div class="form-group">
-                  <input type="password" name="password_confirmation" class="form-control form-control-lg" placeholder="Konfirmasi Password" required>
-                </div>
+              @csrf
 
-                <div class="mt-3 d-grid gap-2">
-                  <button type="submit" class="btn btn-gradient-primary btn-lg w-100">
-                    Daftar
-                  </button>
-                </div>
-              </form>
+              <div class="form-group">
+                <input type="text" name="username"
+                      class="form-control form-control-lg"
+                      placeholder="Nama / Username"
+                      value="{{ old('username') }}"
+                      required>
+              </div>
+
+              <div class="form-group">
+                <input type="email" name="email"
+                      class="form-control form-control-lg"
+                      placeholder="Email"
+                      value="{{ old('email') }}"
+                      required>
+              </div>
+
+              <div class="form-group">
+                <input type="password" name="password"
+                      class="form-control form-control-lg"
+                      placeholder="Password"
+                      required>
+              </div>
+
+              <div class="form-group">
+                <input type="password" name="password_confirmation"
+                      class="form-control form-control-lg"
+                      placeholder="Konfirmasi Password"
+                      required>
+              </div>
+
+              <!-- ALAMAT -->
+              <div class="form-group">
+                <input type="text" name="alamat"
+                      class="form-control form-control-lg"
+                      placeholder="Alamat"
+                      value="{{ old('alamat') }}"
+                      required>
+              </div>
+
+              <!-- JENIS KELAMIN -->
+              <div class="form-group">
+                <select name="jenis_kelamin"
+                        class="form-control form-control-lg"
+                        required>
+                  <option value="">Pilih Jenis Kelamin</option>
+                  <option value="L">Laki-laki</option>
+                  <option value="P">Perempuan</option>
+                </select>
+              </div>
+
+              <!-- NO TELEPON -->
+              <div class="form-group">
+                <input type="text" name="no_telepon"
+                      class="form-control form-control-lg"
+                      placeholder="No Telepon"
+                      value="{{ old('no_telepon') }}"
+                      required>
+              </div>
+
+              <div class="mt-3">
+                <button type="submit"
+                        class="btn btn-gradient-primary btn-lg w-100">
+                  Daftar
+                </button>
+              </div>
+            </form>
+
 
               <!-- ATAU REGISTER DENGAN GOOGLE -->
               <div class="mt-3 d-grid gap-2">

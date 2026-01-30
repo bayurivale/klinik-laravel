@@ -32,11 +32,16 @@ class RegisterController extends Controller
         ]);
 
         Pelanggan::create([
-            'id_user' => $user->id,
-            'nama_lengkap' => $user->username,
+            'id_user'        => $user->id,
+            'nama'           => $request->username,
+            'alamat'         => $request->alamat,
+            'jenis_kelamin'  => $request->jenis_kelamin,
+            'no_telepon'     => $request->no_telepon,
         ]);
 
-        return redirect()->route('login')
-        ->with('success', 'Registrasi berhasil! Silakan login.');
+        Auth::login($user);
+
+        return redirect()->route('pelanggan.dashboard');
+
     }
 }

@@ -28,14 +28,16 @@ class ResetPasswordController extends Controller
 
         $status = Password::reset(
             $request->only('email','password','password_confirmation','token'),
-            function($user, $password) {
-                $user->password = Hash::make($password);
-                $user->save();
+            function ($user, $password) {
+            $user->fill([
+                'password' => Hash::make($password),
+            ])->save();
             }
         );
 
         return $status === Password::PASSWORD_RESET
-                    ? redirect()->route('login')->with('status', __($status))
-                    : back()->withErrors(['email' => [__($status)]]);
+            ? redirect()->route('login')->with('success', 'Password berhasil direset')
+            : back()->withErrors(['email' => 'Link reset tidak valid atau sudah kadaluarsa']);
+
     }
 }
