@@ -7,21 +7,50 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ObatController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PelangganController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 
 Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// LOGIN
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    // LOGIN
+    Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::middleware(['auth'])->group(function () {
+    // GOOGLE LOGIN
+    Route::get('/auth/google', [LoginController::class, 'redirectToGoogle'])->name('google.login');
 
-    Route::middleware(['role:admin,pegawai'])->group(function () {
-        Route::resource('obat', ObatController::class);
-    });
+    Route::get('/auth/google/callback', [LoginController::class, 'handleGoogleCallback']);
+    // FORM REGISTER
+    Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegisterForm'])->name('register');
+
+    // PROSES REGISTER
+    Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register.post');
+
+    // FORM LUPA PASSWORD
+    Route::get('/password/forgot', [ForgotPasswordController::class, 'showLinkRequestForm'])
+        ->name('password.request');
+
+    // KIRIM EMAIL RESET PASSWORD
+    Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+        ->name('password.email');
+
+    // FORM RESET PASSWORD (dari link email)
+    Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])
+        ->name('password.reset');
+
+    // PROSES RESET PASSWORD
+    Route::post('/password/reset', [ResetPasswordController::class, 'reset'])
+        ->name('password.update');
+
+    // AUTH AREA
+    Route::middleware(['auth'])->group(function () {
+
+        Route::middleware(['role:admin,pegawai'])->group(function () {
+            Route::resource('obat', ObatController::class);
+        });
 
     // ADMIN
     Route::middleware(['role:admin'])->group(function () {
@@ -36,7 +65,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['role:pegawai'])->group(function () {
         Route::get('/pegawai', [DashboardController::class, 'index'])
             ->name('pegawai.dashboard');
-        
+
         Route::get('/verifikasi/transaksi', [PegawaiController::class, 'index'])
             ->name('transaksi.menunggu');
 
@@ -53,22 +82,14 @@ Route::middleware(['auth'])->group(function () {
         ->name('pelanggan.')
         ->group(function () {
 
-        Route::get('/dashboard', [PelangganController::class, 'dashboard'])
-            ->name('dashboard');
+            Route::get('/dashboard', [PelangganController::class, 'dashboard'])->name('dashboard');
 
-        Route::resource('/obat', PelangganController::class);
-        Route::post('/obat/beli', [PelangganController::class, 'beli'])
-            ->name('obat.beli');
-        Route::get('/pembayaran', [PelangganController::class, 'pembayaranSaya'])
-            ->name('pembayaran.index');
-    });
+            Route::resource('/obat', PelangganController::class);
 
-    
-    // REGISTER FORM
-Route::get('/register', [App\Http\Controllers\Auth\RegisterController::class, 'showRegisterForm'])->name('register');
+            Route::post('/obat/beli', [PelangganController::class, 'beli'])
+                ->name('obat.beli');
 
-// REGISTER PROSES
-Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register.post');
-
-
+            Route::get('/pembayaran', [PelangganController::class, 'pembayaranSaya'])
+                ->name('pembayaran.index');
+        });
 });

@@ -16,6 +16,9 @@ return new class extends Migration
              $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('provider')->default('local')->nullable();
+            $table->string('provider_id')->nullable();
+            $table->text('avatar')->nullable();
             $table->enum('role', ['admin', 'pegawai', 'pelanggan'])->default('pelanggan');
             $table->rememberToken();
             $table->timestamps();

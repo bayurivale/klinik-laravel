@@ -3,19 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Login | Klinik</title>
-
-  <!-- Plugins CSS -->
+  <title>Reset Password | Klinik</title>
   <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendors/ti-icons/css/themify-icons.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendors/css/vendor.bundle.base.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/vendors/font-awesome/css/font-awesome.min.css') }}">
-
-  <!-- Layout styles -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}">
 </head>
-
 <body>
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
@@ -25,74 +20,53 @@
             <div class="auth-form-light text-left p-5">
 
               <div class="brand-logo text-center">
-                <img src="{{ asset('assets/images/klinik.png') }}" alt="logo">
+                <img src="{{ asset('assets/images/logo.svg') }}" alt="logo">
               </div>
 
-              <h4 class="text-center">Selamat Datang</h4>
-              <h6 class="font-weight-light text-center mb-4">
-                Silakan login untuk melanjutkan
-              </h6>
+              <h4 class="text-center">Reset Password</h4>
+              <h6 class="font-weight-light text-center mb-4">Silakan masukkan password baru Anda</h6>
 
-              @if(session('success'))
-                  <div class="alert alert-success text-center">
-                      {{ session('success') }}
-                  </div>
+              @if ($errors->any())
+                <div class="alert alert-danger">
+                  <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+                </div>
               @endif
 
-              <form method="POST" action="{{ route('login') }}">
+              <form method="POST" action="{{ route('password.update') }}">
                 @csrf
+                <input type="hidden" name="token" value="{{ $token }}">
 
                 <div class="form-group">
-                  <input
-                    type="text"
-                    name="login"
-                    class="form-control form-control-lg"
-                    placeholder="Username atau Email"
-                    value="{{ old('login') }}"
-                    required
-                  >
+                  <input type="email" name="email" class="form-control form-control-lg"
+                         placeholder="Email" value="{{ $email ?? old('email') }}" required>
                 </div>
 
                 <div class="form-group">
-                  <input
-                    type="password"
-                    name="password"
-                    class="form-control form-control-lg"
-                    placeholder="Password"
-                    required
-                  >
+                  <input type="password" name="password" class="form-control form-control-lg"
+                         placeholder="Password Baru" required>
                 </div>
 
-                @if ($errors->any())
-                  <div class="alert alert-danger">
-                    {{ $errors->first() }}
-                  </div>
-                @endif
+                <div class="form-group">
+                  <input type="password" name="password_confirmation" class="form-control form-control-lg"
+                         placeholder="Konfirmasi Password" required>
+                </div>
 
                 <div class="mt-3 d-grid gap-2">
-                  <!-- Tombol Login Manual -->
                   <button type="submit" class="btn btn-gradient-primary btn-lg w-100">
-                    SIGN IN
+                    Reset Password
                   </button>
-
-                  <!-- Tombol Login Google Tanpa Gambar -->
-                  <a href="{{ route('google.login') }}" 
-                    class="btn btn-danger btn-lg w-100 text-white fw-bold">
-                    Login dengan Google
-                  </a>
-                </div>
-
-                <div class="my-2 d-flex justify-content-between align-items-center">
-                  <a href="{{ route('password.request') }}" class="text-primary">Forgot password?</a>
                 </div>
 
                 <div class="text-center mt-4 font-weight-light">
-                  Belum punya akun?
-                  <a href="{{ route('register') }}" class="text-primary">
-                    Daftar
-                  </a>
+                  Kembali ke
+                  <a href="{{ route('login') }}" class="text-primary">Login</a>
                 </div>
               </form>
+
             </div>
           </div>
         </div>
@@ -100,13 +74,11 @@
     </div>
   </div>
 
-  <!-- JS -->
   <script src="{{ asset('assets/vendors/js/vendor.bundle.base.js') }}"></script>
   <script src="{{ asset('assets/js/off-canvas.js') }}"></script>
   <script src="{{ asset('assets/js/misc.js') }}"></script>
   <script src="{{ asset('assets/js/settings.js') }}"></script>
   <script src="{{ asset('assets/js/todolist.js') }}"></script>
   <script src="{{ asset('assets/js/jquery.cookie.js') }}"></script>
-
 </body>
 </html>

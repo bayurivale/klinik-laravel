@@ -68,40 +68,43 @@
 </div>
 
 
-{{-- QUICK ACTION --}}
-<div class="row mb-4">
-    <div class="col-md-12">
-        <h5 class="mb-3 font-weight-bold">Aksi Cepat</h5>
-    </div>
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <h5 class="mb-3 font-weight-bold">Aksi Cepat</h5>
+        </div>
 
-    <div class="col-md-6 mb-3">
-        <a href="{{ route('pelanggan.obat.index') }}"
-           class="card text-decoration-none shadow-sm hover-shadow">
-            <div class="card-body d-flex align-items-center">
-                <i class="fa fa-medkit fa-2x text-primary mr-3"></i>
-                <div>
-                    <h6 class="mb-0 font-weight-bold">Beli Obat</h6>
-                    <small class="text-muted">Cari & pesan obat dengan cepat</small>
+        <div class="col-md-6 mb-3">
+            <a href="{{ route('pelanggan.obat.index') }}"
+            class="card h-100 text-decoration-none shadow-sm hover-shadow">
+                <div class="card-body d-flex align-items-center">
+                    <div class="mr-3">
+                        <i class="fa fa-medkit fa-2x text-primary"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1 font-weight-bold">Beli Obat</h6>
+                        <small class="text-muted">Cari & pesan obat dengan cepat</small>
+                    </div>
                 </div>
-            </div>
-        </a>
-    </div>
+            </a>
+        </div>
 
-    <div class="col-md-6 mb-3">
-        <a href="{{ route('pelanggan.pembayaran.index') }}"
-           class="card text-decoration-none shadow-sm">
-            <div class="card-body d-flex align-items-center">
-                <i class="fa fa-credit-card fa-2x text-success mr-3"></i>
-                <div>
-                    <h6 class="mb-0 font-weight-bold">Pembayaran</h6>
-                    <small class="text-muted">Pantau status pembayaran Anda</small>
+        <div class="col-md-6 mb-3">
+            <a href="{{ route('pelanggan.pembayaran.index') }}"
+            class="card h-100 text-decoration-none shadow-sm hover-shadow">
+                <div class="card-body d-flex align-items-center">
+                    <div class="mr-3">
+                        <i class="fa fa-credit-card fa-2x text-success"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-1 font-weight-bold">Pembayaran</h6>
+                        <small class="text-muted">Pantau status pembayaran Anda</small>
+                    </div>
                 </div>
-            </div>
-        </a>
+            </a>
+        </div>
     </div>
-</div>
 
-{{-- FOOTER INFO --}}
+
 <div class="row">
     <div class="col-md-12">
         <div class="card bg-light">

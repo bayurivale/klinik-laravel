@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Login | Klinik</title>
+  <title>Lupa Password | Klinik</title>
 
   <!-- Plugins CSS -->
   <link rel="stylesheet" href="{{ asset('assets/vendors/mdi/css/materialdesignicons.min.css') }}">
@@ -15,7 +15,6 @@
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}">
 </head>
-
 <body>
   <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
@@ -25,74 +24,46 @@
             <div class="auth-form-light text-left p-5">
 
               <div class="brand-logo text-center">
-                <img src="{{ asset('assets/images/klinik.png') }}" alt="logo">
+                <img src="{{ asset('assets/images/logo.svg') }}" alt="logo">
               </div>
 
-              <h4 class="text-center">Selamat Datang</h4>
+              <h4 class="text-center">Lupa Password</h4>
               <h6 class="font-weight-light text-center mb-4">
-                Silakan login untuk melanjutkan
+                Masukkan email Anda untuk mengirim link reset password
               </h6>
 
-              @if(session('success'))
-                  <div class="alert alert-success text-center">
-                      {{ session('success') }}
-                  </div>
+              @if (session('status'))
+                <div class="alert alert-success">{{ session('status') }}</div>
               @endif
 
-              <form method="POST" action="{{ route('login') }}">
+              @if ($errors->any())
+                <div class="alert alert-danger">
+                  <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                      <li>{{ $error }}</li>
+                    @endforeach
+                  </ul>
+                </div>
+              @endif
+
+              <form method="POST" action="{{ route('password.email') }}">
                 @csrf
-
                 <div class="form-group">
-                  <input
-                    type="text"
-                    name="login"
-                    class="form-control form-control-lg"
-                    placeholder="Username atau Email"
-                    value="{{ old('login') }}"
-                    required
-                  >
+                  <input type="email" name="email" class="form-control form-control-lg" placeholder="Email" value="{{ old('email') }}" required>
                 </div>
-
-                <div class="form-group">
-                  <input
-                    type="password"
-                    name="password"
-                    class="form-control form-control-lg"
-                    placeholder="Password"
-                    required
-                  >
-                </div>
-
-                @if ($errors->any())
-                  <div class="alert alert-danger">
-                    {{ $errors->first() }}
-                  </div>
-                @endif
 
                 <div class="mt-3 d-grid gap-2">
-                  <!-- Tombol Login Manual -->
                   <button type="submit" class="btn btn-gradient-primary btn-lg w-100">
-                    SIGN IN
+                    Kirim Link Reset Password
                   </button>
-
-                  <!-- Tombol Login Google Tanpa Gambar -->
-                  <a href="{{ route('google.login') }}" 
-                    class="btn btn-danger btn-lg w-100 text-white fw-bold">
-                    Login dengan Google
-                  </a>
-                </div>
-
-                <div class="my-2 d-flex justify-content-between align-items-center">
-                  <a href="{{ route('password.request') }}" class="text-primary">Forgot password?</a>
                 </div>
 
                 <div class="text-center mt-4 font-weight-light">
-                  Belum punya akun?
-                  <a href="{{ route('register') }}" class="text-primary">
-                    Daftar
-                  </a>
+                  Kembali ke
+                  <a href="{{ route('login') }}" class="text-primary">Login</a>
                 </div>
               </form>
+
             </div>
           </div>
         </div>
